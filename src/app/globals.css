@@ -6,12 +6,12 @@
   --ink: #1a1b1e;
   --ink-soft: #6b6d72;
   --line: #e3e3e1;
-  --orange: #ec5a2c;
-  --orange-soft: #ffe0d1;
-  --orange-bg: #fff4ee;
-  --blue: #2f5fdb;
-  --blue-soft: #dbe6fc;
-  --blue-bg: #eef3fd;
+  --orange: #ef7a34;
+  --orange-soft: #fbdfc4;
+  --orange-bg: #fdf3ea;
+  --blue: #1b9c96;
+  --blue-soft: #cdeeeb;
+  --blue-bg: #eaf7f6;
 }
 
 :root.dark {
@@ -20,12 +20,12 @@
   --ink: #ecebe9;
   --ink-soft: #93959c;
   --line: #33353a;
-  --orange: #ff7a4d;
-  --orange-soft: #4a2a1c;
-  --orange-bg: #241a15;
-  --blue: #6d93ff;
-  --blue-soft: #1c2c52;
-  --blue-bg: #161c2c;
+  --orange: #ff9152;
+  --orange-soft: #4a2c18;
+  --orange-bg: #271a10;
+  --blue: #3ecfc7;
+  --blue-soft: #123634;
+  --blue-bg: #0e2624;
 }
 
 @theme inline {
