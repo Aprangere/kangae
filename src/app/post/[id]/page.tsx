@@ -7,6 +7,7 @@ import { timeAgo } from "@/lib/posts";
 import { getPostAuthorPoints } from "@/lib/points";
 import { getCurrentUser } from "@/lib/auth";
 import { getLocale } from "@/lib/locale";
+import { getVoterKey } from "@/lib/interest";
 import { t, plural, translateCategory, translateNature } from "@/lib/i18n";
 
 export default async function PostPage({
@@ -15,19 +16,27 @@ export default async function PostPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const [post, viewer, locale] = await Promise.all([
+  const [post, viewer, locale, voterKey] = await Promise.all([
     prisma.post.findUnique({
       where: { id },
       include: { categories: true, natures: true },
     }),
     getCurrentUser(),
     getLocale(),
+    getVoterKey(),
   ]);
 
   if (!post) notFound();
 
   const points = await getPostAuthorPoints(post);
   const isOwnPost = viewer?.id === post.authorId;
+  const hasVoted = voterKey
+    ? Boolean(
+        await prisma.interest.findUnique({
+          where: { postId_voterKey: { postId: post.id, voterKey } },
+        })
+      )
+    : false;
 
   return (
     <div className="flex flex-col flex-1">
@@ -65,8 +74,13 @@ export default async function PostPage({
           <form action={markInterested.bind(null, post.id)}>
             <button
               type="submit"
-              className="font-mono text-xs uppercase tracking-wide rounded-full border border-orange text-orange px-4 py-2 hover:bg-orange hover:text-white transition-colors whitespace-nowrap"
+              className={`font-mono text-xs uppercase tracking-wide rounded-full border border-orange px-4 py-2 transition-colors whitespace-nowrap ${
+                hasVoted
+                  ? "bg-orange text-white"
+                  : "text-orange hover:bg-orange hover:text-white"
+              }`}
             >
+              {hasVoted ? "✓ " : ""}
               {t(locale, "post.interestedButton")}
             </button>
           </form>

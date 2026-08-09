@@ -24,6 +24,17 @@ model Post {
   categories Category[] @relation("PostCategories")
   natures    Nature[]   @relation("PostNatures")
   messages   Message[]
+  interests  Interest[]
+}
+
+model Interest {
+  id        String   @id @default(cuid())
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id])
+  voterKey  String
+  createdAt DateTime @default(now())
+
+  @@unique([postId, voterKey])
 }
 
 model Nature {

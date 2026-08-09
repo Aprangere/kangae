@@ -10,6 +10,7 @@ import { sendMagicLink } from "@/lib/mail";
 import { EMAIL_PATTERN } from "@/lib/posts";
 import { LOCALE_COOKIE } from "@/lib/i18n";
 import { slugify } from "@/lib/slug";
+import { getOrCreateVoterKey } from "@/lib/interest";
 
 export async function setLocale(locale: string) {
   const cookieStore = await cookies();
@@ -68,10 +69,30 @@ export async function createPost(formData: FormData) {
 }
 
 export async function markInterested(postId: string) {
-  await prisma.post.update({
-    where: { id: postId },
-    data: { interestedCount: { increment: 1 } },
+  const voterKey = await getOrCreateVoterKey();
+
+  const existing = await prisma.interest.findUnique({
+    where: { postId_voterKey: { postId, voterKey } },
   });
+
+  if (existing) {
+    await prisma.$transaction([
+      prisma.interest.delete({ where: { id: existing.id } }),
+      prisma.post.update({
+        where: { id: postId },
+        data: { interestedCount: { decrement: 1 } },
+      }),
+    ]);
+  } else {
+    await prisma.$transaction([
+      prisma.interest.create({ data: { postId, voterKey } }),
+      prisma.post.update({
+        where: { id: postId },
+        data: { interestedCount: { increment: 1 } },
+      }),
+    ]);
+  }
+
   revalidatePath(`/post/${postId}`);
   revalidatePath("/");
 }
