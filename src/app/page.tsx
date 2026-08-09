@@ -39,7 +39,7 @@ export default async function Home() {
           </Link>
           <Link
             href="/nouveau"
-            className="font-mono text-sm uppercase tracking-wide rounded-full bg-orange text-white px-8 py-4 hover:bg-orange/90 transition-colors"
+            className="font-mono text-sm uppercase tracking-wide rounded-full border-2 border-orange text-orange px-8 py-4 hover:bg-orange hover:text-white transition-colors"
           >
             {t(locale, "home.cta.share")}
           </Link>

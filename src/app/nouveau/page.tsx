@@ -127,7 +127,7 @@ export default async function NewPostPage() {
 
           <button
             type="submit"
-            className="font-mono text-sm uppercase tracking-wide rounded-full bg-orange text-white px-6 py-3 self-start hover:bg-orange/90 transition-colors"
+            className="font-mono text-sm uppercase tracking-wide rounded-full border-2 border-orange text-orange px-6 py-3 self-start hover:bg-orange hover:text-white transition-colors"
           >
             {t(locale, "nouveau.submit")}
           </button>
