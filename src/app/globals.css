@@ -1,25 +1,31 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #f4f5f0;
-  --surface: #fbfbf8;
-  --ink: #21221d;
-  --ink-soft: #55564c;
-  --line: #d8d5c8;
-  --salmon: #d97a5f;
-  --salmon-soft: #fbe7de;
-  --salmon-bg: #fdf2ec;
+  --paper: #f6f6f4;
+  --surface: #ffffff;
+  --ink: #1a1b1e;
+  --ink-soft: #6b6d72;
+  --line: #e3e3e1;
+  --orange: #ec5a2c;
+  --orange-soft: #ffe0d1;
+  --orange-bg: #fff4ee;
+  --blue: #2f5fdb;
+  --blue-soft: #dbe6fc;
+  --blue-bg: #eef3fd;
 }
 
 :root.dark {
-  --paper: #1e1c18;
-  --surface: #262420;
-  --ink: #ede8e2;
-  --ink-soft: #a39c8f;
-  --line: #3a362f;
-  --salmon: #e08a6f;
-  --salmon-soft: #4a2e24;
-  --salmon-bg: #2b211d;
+  --paper: #17181b;
+  --surface: #202226;
+  --ink: #ecebe9;
+  --ink-soft: #93959c;
+  --line: #33353a;
+  --orange: #ff7a4d;
+  --orange-soft: #4a2a1c;
+  --orange-bg: #241a15;
+  --blue: #6d93ff;
+  --blue-soft: #1c2c52;
+  --blue-bg: #161c2c;
 }
 
 @theme inline {
@@ -28,9 +34,12 @@
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-line: var(--line);
-  --color-salmon: var(--salmon);
-  --color-salmon-soft: var(--salmon-soft);
-  --color-salmon-bg: var(--salmon-bg);
+  --color-orange: var(--orange);
+  --color-orange-soft: var(--orange-soft);
+  --color-orange-bg: var(--orange-bg);
+  --color-blue: var(--blue);
+  --color-blue-soft: var(--blue-soft);
+  --color-blue-bg: var(--blue-bg);
 
   --font-display: var(--font-display);
   --font-body: var(--font-body);

@@ -33,13 +33,13 @@ export default async function Home() {
         <div className="mt-10 flex flex-col sm:flex-row gap-4">
           <Link
             href="/explorer"
-            className="font-mono text-sm uppercase tracking-wide rounded-full border-2 border-salmon text-salmon px-8 py-4 hover:bg-salmon hover:text-white transition-colors"
+            className="font-mono text-sm uppercase tracking-wide rounded-full border-2 border-blue text-blue px-8 py-4 hover:bg-blue hover:text-white transition-colors"
           >
             {t(locale, "home.cta.find")}
           </Link>
           <Link
             href="/nouveau"
-            className="font-mono text-sm uppercase tracking-wide rounded-full bg-ink text-paper px-8 py-4 hover:bg-ink/90 transition-colors"
+            className="font-mono text-sm uppercase tracking-wide rounded-full bg-orange text-white px-8 py-4 hover:bg-orange/90 transition-colors"
           >
             {t(locale, "home.cta.share")}
           </Link>
@@ -66,7 +66,7 @@ export default async function Home() {
               </h2>
               <Link
                 href="/explorer"
-                className="font-mono text-xs uppercase tracking-wide text-salmon hover:underline"
+                className="font-mono text-xs uppercase tracking-wide text-blue hover:underline"
               >
                 {t(locale, "home.seeAll")}
               </Link>

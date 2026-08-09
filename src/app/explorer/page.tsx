@@ -62,7 +62,7 @@ export default async function ExplorerPage({
           </h1>
 
           {posts.length === 0 ? (
-            <p className="font-mono text-sm text-ink-soft rounded-xl border border-dashed border-line px-5 py-8 text-center">
+            <p className="font-mono text-sm text-ink-soft rounded-lg border border-dashed border-line px-5 py-8 text-center">
               {t(locale, "explorer.empty")}
             </p>
           ) : (

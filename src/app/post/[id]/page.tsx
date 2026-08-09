@@ -34,14 +34,11 @@ export default async function PostPage({
       <Header />
       <main className="flex-1 mx-auto w-full max-w-2xl px-6 py-10">
         {(post.natures.length > 0 || post.categories.length > 0) && (
-          <p className="font-mono text-xs uppercase tracking-wide text-salmon">
-            {post.natures.map((n) => translateNature(locale, n.slug, n.name)).join(" · ")}
-            {post.categories.length > 0 && (
-              <span className="text-ink-soft">
-                {post.natures.length > 0 ? " · " : ""}
-                {post.categories.map((c) => translateCategory(locale, c.slug, c.name)).join(", ")}
-              </span>
-            )}
+          <p className="font-mono text-xs uppercase tracking-wide text-ink-soft">
+            {[
+              ...post.natures.map((n) => translateNature(locale, n.slug, n.name)),
+              ...post.categories.map((c) => translateCategory(locale, c.slug, c.name)),
+            ].join(" · ")}
           </p>
         )}
 
@@ -51,7 +48,7 @@ export default async function PostPage({
 
         <p className="font-mono text-xs text-ink-soft mt-2">
           {post.authorName}
-          {post.authorId && <span className="text-salmon"> {t(locale, "post.verified")}</span>} ·{" "}
+          {post.authorId && <span className="text-blue"> {t(locale, "post.verified")}</span>} ·{" "}
           {points} {t(locale, "postcard.pts")} · {timeAgo(post.createdAt, locale)}
         </p>
 
@@ -59,7 +56,7 @@ export default async function PostPage({
           {post.content}
         </p>
 
-        <div className="mt-10 rounded-xl border border-line bg-surface px-5 py-4 flex items-center justify-between gap-4">
+        <div className="mt-10 rounded-lg border border-line bg-surface px-5 py-4 flex items-center justify-between gap-4">
           <p className="text-sm">
             {post.interestedCount === 0
               ? t(locale, "post.notManifested")
@@ -68,14 +65,14 @@ export default async function PostPage({
           <form action={markInterested.bind(null, post.id)}>
             <button
               type="submit"
-              className="font-mono text-xs uppercase tracking-wide rounded-full border border-line px-4 py-2 hover:bg-ink hover:text-paper hover:border-ink transition-colors whitespace-nowrap"
+              className="font-mono text-xs uppercase tracking-wide rounded-full border border-orange text-orange px-4 py-2 hover:bg-orange hover:text-white transition-colors whitespace-nowrap"
             >
               {t(locale, "post.interestedButton")}
             </button>
           </form>
         </div>
 
-        <div className="mt-3 rounded-xl border border-line px-5 py-4">
+        <div className="mt-3 rounded-lg border border-line px-5 py-4">
           {!post.authorId ? (
             <p className="text-sm text-ink-soft">
               {t(locale, "post.noAccount", { name: post.authorName })}
@@ -98,14 +95,14 @@ export default async function PostPage({
               />
               <button
                 type="submit"
-                className="font-mono text-xs uppercase tracking-wide rounded-full bg-ink text-paper px-4 py-2 self-start hover:bg-ink/90 transition-colors"
+                className="font-mono text-xs uppercase tracking-wide rounded-full bg-blue text-white px-4 py-2 self-start hover:bg-blue/90 transition-colors"
               >
                 {t(locale, "post.send")}
               </button>
             </form>
           ) : (
             <p className="text-sm text-ink-soft">
-              <Link href="/connexion" className="text-salmon hover:underline">
+              <Link href="/connexion" className="text-blue hover:underline">
                 {t(locale, "nouveau.connectLink")}
               </Link>{" "}
               {t(locale, "post.loginToWrite", { name: post.authorName })}

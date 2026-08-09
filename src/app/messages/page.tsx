@@ -62,13 +62,13 @@ export default async function MessagesPage() {
         </h1>
 
         {threadList.length === 0 ? (
-          <p className="font-mono text-sm text-ink-soft rounded-xl border border-dashed border-line px-5 py-8 text-center">
+          <p className="font-mono text-sm text-ink-soft rounded-lg border border-dashed border-line px-5 py-8 text-center">
             {t(locale, "messages.empty")}
           </p>
         ) : (
           <div className="flex flex-col gap-6">
             {threadList.map((thread) => (
-              <div key={`${thread.postId}:${thread.otherUserId}`} className="rounded-xl border border-line p-5">
+              <div key={`${thread.postId}:${thread.otherUserId}`} className="rounded-lg border border-line p-5">
                 <p className="font-mono text-xs uppercase tracking-wide text-ink-soft mb-3">
                   {thread.postTitle} · {t(locale, "messages.with")} {thread.otherEmail}
                 </p>
@@ -92,7 +92,7 @@ export default async function MessagesPage() {
                   />
                   <button
                     type="submit"
-                    className="font-mono text-xs uppercase tracking-wide rounded-full bg-ink text-paper px-4 py-2 hover:bg-ink/90 transition-colors"
+                    className="font-mono text-xs uppercase tracking-wide rounded-full bg-blue text-white px-4 py-2 hover:bg-blue/90 transition-colors"
                   >
                     {t(locale, "messages.send")}
                   </button>

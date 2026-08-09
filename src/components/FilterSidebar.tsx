@@ -48,8 +48,8 @@ export function FilterSidebar({
   }
 
   return (
-    <aside className="w-full md:w-64 shrink-0 bg-salmon-bg border border-salmon-soft rounded-2xl p-5 h-fit md:sticky md:top-6">
-      <p className="font-mono text-xs uppercase tracking-wide text-salmon mb-3">
+    <aside className="w-full md:w-64 shrink-0 bg-blue-bg border border-blue-soft rounded-xl p-5 h-fit md:sticky md:top-6">
+      <p className="font-mono text-xs uppercase tracking-wide text-blue mb-3">
         {t(locale, "sidebar.search")}
       </p>
       <form
@@ -64,11 +64,11 @@ export function FilterSidebar({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t(locale, "sidebar.searchPlaceholder")}
-          className="w-full rounded-full border border-salmon-soft bg-surface px-4 py-2.5 text-sm placeholder:text-ink-soft focus:outline-none focus:border-salmon"
+          className="w-full rounded-full border border-blue-soft bg-surface px-4 py-2.5 text-sm placeholder:text-ink-soft focus:outline-none focus:border-blue"
         />
       </form>
 
-      <p className="font-mono text-xs uppercase tracking-wide text-salmon mb-3">
+      <p className="font-mono text-xs uppercase tracking-wide text-blue mb-3">
         {t(locale, "sidebar.nature")}
       </p>
       <p className="text-xs text-ink-soft mb-2 -mt-1">{t(locale, "sidebar.multi")}</p>
@@ -79,8 +79,8 @@ export function FilterSidebar({
             onClick={() => toggleMulti("nature", n.slug)}
             className={`font-mono text-xs rounded-full px-3.5 py-2 border text-left transition-colors ${
               activeNatures.includes(n.slug)
-                ? "border-salmon bg-salmon text-white"
-                : "border-salmon-soft text-ink-soft hover:border-salmon"
+                ? "border-blue bg-blue text-white"
+                : "border-blue-soft text-ink-soft hover:border-blue"
             }`}
           >
             {translateNature(locale, n.slug, n.name)}
@@ -88,7 +88,7 @@ export function FilterSidebar({
         ))}
       </div>
 
-      <p className="font-mono text-xs uppercase tracking-wide text-salmon mb-3">
+      <p className="font-mono text-xs uppercase tracking-wide text-blue mb-3">
         {t(locale, "sidebar.categories")}
       </p>
       <p className="text-xs text-ink-soft mb-2 -mt-1">{t(locale, "sidebar.multi")}</p>
@@ -99,8 +99,8 @@ export function FilterSidebar({
             onClick={() => toggleMulti("categorie", c.slug)}
             className={`font-mono text-xs rounded-full px-3.5 py-2 border text-left transition-colors ${
               activeCategories.includes(c.slug)
-                ? "border-salmon bg-salmon text-white"
-                : "border-salmon-soft text-ink-soft hover:border-salmon"
+                ? "border-blue bg-blue text-white"
+                : "border-blue-soft text-ink-soft hover:border-blue"
             }`}
           >
             {translateCategory(locale, c.slug, c.name)}

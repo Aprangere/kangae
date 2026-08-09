@@ -27,7 +27,7 @@ export default async function NewPostPage() {
           ) : (
             <>
               {t(locale, "nouveau.notConnected")}{" "}
-              <Link href="/connexion" className="text-salmon hover:underline">
+              <Link href="/connexion" className="text-blue hover:underline">
                 {t(locale, "nouveau.connectLink")}
               </Link>{" "}
               {t(locale, "nouveau.connectSuffix")}
@@ -45,7 +45,7 @@ export default async function NewPostPage() {
               {natures.map((n) => (
                 <label key={n.id}>
                   <input type="checkbox" name="natures" value={n.slug} className="peer sr-only" />
-                  <span className="block cursor-pointer rounded-full font-mono text-xs px-3.5 py-1.5 border border-line text-ink-soft peer-checked:border-ink peer-checked:bg-ink peer-checked:text-paper">
+                  <span className="block cursor-pointer rounded-full font-mono text-xs px-3.5 py-1.5 border border-line text-ink-soft peer-checked:border-orange peer-checked:bg-orange peer-checked:text-white">
                     {translateNature(locale, n.slug, n.name)}
                   </span>
                 </label>
@@ -94,7 +94,7 @@ export default async function NewPostPage() {
                     value={c.slug}
                     className="peer sr-only"
                   />
-                  <span className="block cursor-pointer rounded-full font-mono text-xs px-3.5 py-1.5 border border-line text-ink-soft peer-checked:border-ink peer-checked:bg-ink peer-checked:text-paper">
+                  <span className="block cursor-pointer rounded-full font-mono text-xs px-3.5 py-1.5 border border-line text-ink-soft peer-checked:border-orange peer-checked:bg-orange peer-checked:text-white">
                     {translateCategory(locale, c.slug, c.name)}
                   </span>
                 </label>
@@ -127,7 +127,7 @@ export default async function NewPostPage() {
 
           <button
             type="submit"
-            className="font-mono text-sm uppercase tracking-wide rounded-full bg-ink text-paper px-6 py-3 self-start hover:bg-ink/90 transition-colors"
+            className="font-mono text-sm uppercase tracking-wide rounded-full bg-orange text-white px-6 py-3 self-start hover:bg-orange/90 transition-colors"
           >
             {t(locale, "nouveau.submit")}
           </button>

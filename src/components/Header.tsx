@@ -33,7 +33,7 @@ export async function Header() {
             >
               {t(locale, "header.messages")}
               {unreadCount > 0 && (
-                <span className="ml-1.5 rounded-full bg-salmon text-white text-[10px] px-1.5 py-0.5">
+                <span className="ml-1.5 rounded-full bg-orange text-white text-[10px] px-1.5 py-0.5">
                   {unreadCount}
                 </span>
               )}

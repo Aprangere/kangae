@@ -22,13 +22,13 @@ export default async function ConnexionPage({
         <p className="text-ink-soft mt-1 mb-8">{t(locale, "connexion.subtitle")}</p>
 
         {envoye ? (
-          <p className="rounded-xl border border-line bg-surface px-5 py-4">
+          <p className="rounded-lg border border-line bg-surface px-5 py-4">
             {t(locale, "connexion.sent")}
           </p>
         ) : (
           <form action={requestMagicLink} className="flex flex-col gap-4">
             {erreur && (
-              <p className="text-sm text-salmon">{t(locale, "connexion.error")}</p>
+              <p className="text-sm text-orange">{t(locale, "connexion.error")}</p>
             )}
             <label className="flex flex-col gap-1.5">
               <span className="font-mono text-xs uppercase tracking-wide text-ink-soft">
@@ -44,7 +44,7 @@ export default async function ConnexionPage({
             </label>
             <button
               type="submit"
-              className="font-mono text-sm uppercase tracking-wide rounded-full bg-ink text-paper px-6 py-3 self-start hover:bg-ink/90 transition-colors"
+              className="font-mono text-sm uppercase tracking-wide rounded-full bg-blue text-white px-6 py-3 self-start hover:bg-blue/90 transition-colors"
             >
               {t(locale, "connexion.submit")}
             </button>
