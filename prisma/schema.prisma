@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id              String   @id @default(cuid())
+  title           String
+  content         String
+  authorName      String
+  interestedCount Int      @default(0)
+  createdAt       DateTime @default(now())
+
+  authorId String?
+  author   User?   @relation(fields: [authorId], references: [id])
+
+  categories Category[] @relation("PostCategories")
+  natures    Nature[]   @relation("PostNatures")
+  messages   Message[]
+}
+
+model Nature {
+  id   String @id @default(cuid())
+  name String @unique
+  slug String @unique
+
+  posts Post[] @relation("PostNatures")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+
+  posts             Post[]
+  sessions          Session[]
+  loginTokens       LoginToken[]
+  sentMessages      Message[]    @relation("SentMessages")
+  receivedMessages  Message[]    @relation("ReceivedMessages")
+}
+
+model Message {
+  id          String    @id @default(cuid())
+  postId      String
+  post        Post      @relation(fields: [postId], references: [id])
+  senderId    String
+  sender      User      @relation("SentMessages", fields: [senderId], references: [id])
+  recipientId String
+  recipient   User      @relation("ReceivedMessages", fields: [recipientId], references: [id])
+  content     String
+  createdAt   DateTime  @default(now())
+  readAt      DateTime?
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model LoginToken {
+  id        String    @id @default(cuid())
+  token     String    @unique
+  email     String
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+}
+
+model Category {
+  id   String @id @default(cuid())
+  name String @unique
+  slug String @unique
+
+  posts Post[] @relation("PostCategories")
+}
