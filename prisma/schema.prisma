@@ -21,10 +21,11 @@ model Post {
   authorId String?
   author   User?   @relation(fields: [authorId], references: [id])
 
-  categories Category[] @relation("PostCategories")
-  natures    Nature[]   @relation("PostNatures")
-  messages   Message[]
-  interests  Interest[]
+  categories    Category[]     @relation("PostCategories")
+  natures       Nature[]       @relation("PostNatures")
+  messages      Message[]
+  interests     Interest[]
+  contributions Contribution[]
 }
 
 model Interest {
@@ -35,6 +36,31 @@ model Interest {
   createdAt DateTime @default(now())
 
   @@unique([postId, voterKey])
+}
+
+model Contribution {
+  id         String   @id @default(cuid())
+  postId     String
+  post       Post     @relation(fields: [postId], references: [id])
+  authorName String
+  authorId   String?
+  author     User?    @relation(fields: [authorId], references: [id])
+  content    String
+  score      Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  votes ContributionVote[]
+}
+
+model ContributionVote {
+  id             String       @id @default(cuid())
+  contributionId String
+  contribution   Contribution @relation(fields: [contributionId], references: [id])
+  voterKey       String
+  value          Int
+  createdAt      DateTime     @default(now())
+
+  @@unique([contributionId, voterKey])
 }
 
 model Nature {
@@ -57,6 +83,7 @@ model User {
   loginTokens       LoginToken[]
   sentMessages      Message[]    @relation("SentMessages")
   receivedMessages  Message[]    @relation("ReceivedMessages")
+  contributions     Contribution[]
 }
 
 model Message {

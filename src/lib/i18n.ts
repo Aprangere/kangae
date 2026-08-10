@@ -69,6 +69,14 @@ const strings: Record<Locale, Record<string, string>> = {
     "post.send": "Envoyer",
     "post.loginToWrite": "pour écrire à {name}.",
 
+    "contribution.title": "Contributions",
+    "contribution.empty": "Pas encore de contribution — soyez le premier à faire avancer cette idée.",
+    "contribution.placeholder": "Ajoutez un élément, une piste, une ressource...",
+    "contribution.submit": "Contribuer",
+    "contribution.voteUpLabel": "Voter pour cette contribution",
+    "contribution.voteDownLabel": "Voter contre cette contribution",
+    "contribution.hidden": "Contribution masquée — score bas. Afficher quand même ?",
+
     "connexion.title": "Se connecter",
     "connexion.subtitle":
       "Optionnel : un compte vérifie que vos posts sont bien de vous, et protège vos points. Pas de mot de passe — juste un lien par email.",
@@ -148,6 +156,14 @@ const strings: Record<Locale, Record<string, string>> = {
     "post.messagePlaceholder": "Your message...",
     "post.send": "Send",
     "post.loginToWrite": "to write to {name}.",
+
+    "contribution.title": "Contributions",
+    "contribution.empty": "No contributions yet — be the first to move this idea forward.",
+    "contribution.placeholder": "Add an element, a lead, a resource...",
+    "contribution.submit": "Contribute",
+    "contribution.voteUpLabel": "Vote up this contribution",
+    "contribution.voteDownLabel": "Vote down this contribution",
+    "contribution.hidden": "Contribution hidden — low score. Show anyway?",
 
     "connexion.title": "Log in",
     "connexion.subtitle":

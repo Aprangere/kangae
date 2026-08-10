@@ -85,6 +85,8 @@ export async function deletePost(postId: string) {
   await prisma.$transaction([
     prisma.interest.deleteMany({ where: { postId } }),
     prisma.message.deleteMany({ where: { postId } }),
+    prisma.contributionVote.deleteMany({ where: { contribution: { postId } } }),
+    prisma.contribution.deleteMany({ where: { postId } }),
     prisma.post.delete({ where: { id: postId } }),
   ]);
 
@@ -121,6 +123,74 @@ export async function markInterested(postId: string) {
 
   revalidatePath(`/post/${postId}`);
   revalidatePath("/");
+}
+
+export async function addContribution(postId: string, formData: FormData) {
+  const currentUser = await getCurrentUser();
+  const content = formData.get("content");
+  const authorNameRaw = formData.get("authorName");
+
+  if (typeof content !== "string" || content.trim().length === 0) {
+    throw new Error("Le contenu est requis.");
+  }
+  const authorName =
+    typeof authorNameRaw === "string" && authorNameRaw.trim().length > 0
+      ? authorNameRaw.trim()
+      : currentUser?.name ?? currentUser?.email;
+  if (!authorName) {
+    throw new Error("Le nom est requis.");
+  }
+
+  await prisma.contribution.create({
+    data: {
+      postId,
+      content: content.trim(),
+      authorName,
+      authorId: currentUser?.id,
+    },
+  });
+
+  revalidatePath(`/post/${postId}`);
+}
+
+export async function voteContribution(contributionId: string, value: 1 | -1) {
+  const voterKey = await getVoterKey();
+  if (!voterKey) redirect("/connexion");
+
+  const contribution = await prisma.contribution.findUnique({ where: { id: contributionId } });
+  if (!contribution) redirect("/");
+
+  const existing = await prisma.contributionVote.findUnique({
+    where: { contributionId_voterKey: { contributionId, voterKey } },
+  });
+
+  if (existing && existing.value === value) {
+    await prisma.$transaction([
+      prisma.contributionVote.delete({ where: { id: existing.id } }),
+      prisma.contribution.update({
+        where: { id: contributionId },
+        data: { score: { decrement: value } },
+      }),
+    ]);
+  } else if (existing) {
+    await prisma.$transaction([
+      prisma.contributionVote.update({ where: { id: existing.id }, data: { value } }),
+      prisma.contribution.update({
+        where: { id: contributionId },
+        data: { score: { increment: value * 2 } },
+      }),
+    ]);
+  } else {
+    await prisma.$transaction([
+      prisma.contributionVote.create({ data: { contributionId, voterKey, value } }),
+      prisma.contribution.update({
+        where: { id: contributionId },
+        data: { score: { increment: value } },
+      }),
+    ]);
+  }
+
+  revalidatePath(`/post/${contribution.postId}`);
 }
 
 export async function requestMagicLink(formData: FormData) {

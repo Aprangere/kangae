@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { prisma } from "@/lib/prisma";
-import { deletePost, markInterested, sendMessage } from "@/app/actions";
+import { addContribution, deletePost, markInterested, sendMessage, voteContribution } from "@/app/actions";
 import { timeAgo } from "@/lib/posts";
 import { getPostAuthorPoints } from "@/lib/points";
 import { getCurrentUser } from "@/lib/auth";
@@ -20,7 +20,11 @@ export default async function PostPage({
   const [post, viewer, locale, voterKey] = await Promise.all([
     prisma.post.findUnique({
       where: { id },
-      include: { categories: true, natures: true },
+      include: {
+        categories: true,
+        natures: true,
+        contributions: { orderBy: { createdAt: "desc" } },
+      },
     }),
     getCurrentUser(),
     getLocale(),
@@ -39,6 +43,14 @@ export default async function PostPage({
         })
       )
     : false;
+
+  const contributionIds = post.contributions.map((c) => c.id);
+  const myContributionVotes = voterKey && contributionIds.length > 0
+    ? await prisma.contributionVote.findMany({
+        where: { voterKey, contributionId: { in: contributionIds } },
+      })
+    : [];
+  const myVoteByContribution = new Map(myContributionVotes.map((v) => [v.contributionId, v.value]));
 
   return (
     <div className="flex flex-col flex-1">
@@ -108,6 +120,106 @@ export default async function PostPage({
               />
             </form>
           )}
+        </div>
+
+        <div className="mt-10">
+          <h2 className="font-mono text-xs uppercase tracking-wide text-ink-soft mb-3">
+            {t(locale, "contribution.title")}
+          </h2>
+
+          {post.contributions.length === 0 && (
+            <p className="text-sm text-ink-soft">{t(locale, "contribution.empty")}</p>
+          )}
+
+          <div className="flex flex-col gap-3">
+            {post.contributions.map((contribution) => {
+              const myVote = myVoteByContribution.get(contribution.id);
+              const row = (
+                <div className="flex items-start gap-3 rounded-lg border border-line px-4 py-3">
+                  <div className="flex items-center gap-1 shrink-0">
+                    <form action={voteContribution.bind(null, contribution.id, 1)}>
+                      <button
+                        type="submit"
+                        aria-pressed={myVote === 1}
+                        aria-label={t(locale, "contribution.voteUpLabel")}
+                        className={`p-1 rounded-full transition-colors ${
+                          myVote === 1 ? "text-orange" : "text-ink-soft hover:text-orange"
+                        }`}
+                      >
+                        <svg viewBox="0 0 20 20" fill="currentColor" className="h-3 w-3">
+                          <path d="M10 4l6.5 7.5h-4.2V16h-4.6v-4.5H3.5L10 4z" />
+                        </svg>
+                      </button>
+                    </form>
+                    <span className="font-mono text-xs w-5 text-center">{contribution.score}</span>
+                    <form action={voteContribution.bind(null, contribution.id, -1)}>
+                      <button
+                        type="submit"
+                        aria-pressed={myVote === -1}
+                        aria-label={t(locale, "contribution.voteDownLabel")}
+                        className={`p-1 rounded-full transition-colors ${
+                          myVote === -1 ? "text-ink" : "text-ink-soft hover:text-ink"
+                        }`}
+                      >
+                        <svg viewBox="0 0 20 20" fill="currentColor" className="h-3 w-3">
+                          <path d="M10 16l-6.5-7.5h4.2V4h4.6v4.5h3.7L10 16z" />
+                        </svg>
+                      </button>
+                    </form>
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-mono text-xs text-ink-soft">
+                      {contribution.authorName}
+                      {contribution.authorId && (
+                        <span className="text-blue"> {t(locale, "post.verified")}</span>
+                      )}{" "}
+                      · {timeAgo(contribution.createdAt, locale)}
+                    </p>
+                    <p className="mt-1 whitespace-pre-wrap break-words">{contribution.content}</p>
+                  </div>
+                </div>
+              );
+
+              if (contribution.score <= -3) {
+                return (
+                  <details key={contribution.id} className="group">
+                    <summary className="cursor-pointer list-none font-mono text-xs text-ink-soft hover:text-ink px-4 py-2 rounded-lg border border-line">
+                      {t(locale, "contribution.hidden")}
+                    </summary>
+                    <div className="mt-2">{row}</div>
+                  </details>
+                );
+              }
+
+              return <div key={contribution.id}>{row}</div>;
+            })}
+          </div>
+
+          <form action={addContribution.bind(null, post.id)} className="mt-4 flex flex-col gap-2">
+            <textarea
+              name="content"
+              required
+              rows={3}
+              placeholder={t(locale, "contribution.placeholder")}
+              className="rounded-lg border border-line bg-surface px-4 py-2.5 focus:outline-none focus:border-ink resize-y"
+            />
+            {!viewer && (
+              <input
+                type="text"
+                name="authorName"
+                required
+                maxLength={60}
+                placeholder={t(locale, "nouveau.namePlaceholder")}
+                className="rounded-lg border border-line bg-surface px-4 py-2.5 focus:outline-none focus:border-ink"
+              />
+            )}
+            <button
+              type="submit"
+              className="font-mono text-xs uppercase tracking-wide rounded-full border-2 border-orange text-orange px-4 py-2 self-start hover:bg-orange hover:text-white transition-colors"
+            >
+              {t(locale, "contribution.submit")}
+            </button>
+          </form>
         </div>
 
         <div className="mt-3 rounded-lg border border-line px-5 py-4">
