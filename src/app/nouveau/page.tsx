@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { createPost } from "@/app/actions";
 import { getCurrentUser } from "@/lib/auth";
 import { getLocale } from "@/lib/locale";
-import { t, translateCategory, translateNature } from "@/lib/i18n";
+import { LICENSE_OPTIONS, t, translateCategory, translateLicense, translateNature } from "@/lib/i18n";
 
 export default async function NewPostPage() {
   const [categories, natures, user, locale] = await Promise.all([
@@ -119,6 +119,22 @@ export default async function NewPostPage() {
                 <span className="text-xs text-ink-soft mt-1 block">
                   {t(locale, "nouveau.newCategoriesHint")}
                 </span>
+              </div>
+
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-wide text-ink-soft mb-1.5">
+                  {t(locale, "nouveau.license")}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {LICENSE_OPTIONS.map((slug) => (
+                    <label key={slug}>
+                      <input type="radio" name="license" value={slug} className="peer sr-only" />
+                      <span className="block cursor-pointer rounded-full font-mono text-xs px-3 py-1 border border-line text-ink-soft peer-checked:border-orange peer-checked:bg-orange peer-checked:text-white">
+                        {translateLicense(locale, slug)}
+                      </span>
+                    </label>
+                  ))}
+                </div>
               </div>
             </div>
           </details>

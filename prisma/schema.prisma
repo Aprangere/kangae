@@ -15,6 +15,7 @@ model Post {
   title           String
   content         String
   authorName      String
+  license         String?
   interestedCount Int      @default(0)
   createdAt       DateTime @default(now())
 

@@ -11,6 +11,7 @@ import { EMAIL_PATTERN } from "@/lib/posts";
 import { LOCALE_COOKIE } from "@/lib/i18n";
 import { slugify } from "@/lib/slug";
 import { getVoterKey } from "@/lib/interest";
+import { LICENSE_OPTIONS } from "@/lib/i18n";
 
 export async function setLocale(locale: string) {
   const cookieStore = await cookies();
@@ -28,6 +29,11 @@ export async function createPost(formData: FormData) {
   const categorySlugs = formData.getAll("categories").map(String);
   const natureSlugs = formData.getAll("natures").map(String);
   const newCategoriesRaw = formData.get("newCategories");
+  const licenseRaw = formData.get("license");
+  const license =
+    typeof licenseRaw === "string" && LICENSE_OPTIONS.includes(licenseRaw as (typeof LICENSE_OPTIONS)[number])
+      ? licenseRaw
+      : null;
 
   if (typeof title !== "string" || title.trim().length === 0) {
     throw new Error("Le titre est requis.");
@@ -57,6 +63,7 @@ export async function createPost(formData: FormData) {
       content: content.trim(),
       authorName,
       authorId: currentUser?.id,
+      license,
       categories: {
         connect: categorySlugs.map((slug) => ({ slug })),
         connectOrCreate: newCategoryNames.map((name) => ({

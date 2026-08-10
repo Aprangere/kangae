@@ -8,7 +8,7 @@ import { getPostAuthorPoints } from "@/lib/points";
 import { getCurrentUser } from "@/lib/auth";
 import { getLocale } from "@/lib/locale";
 import { getVoterKey } from "@/lib/interest";
-import { t, translateCategory, translateNature } from "@/lib/i18n";
+import { t, translateCategory, translateLicense, translateNature } from "@/lib/i18n";
 import { DeleteButton } from "@/components/DeleteButton";
 
 export default async function PostPage({
@@ -78,6 +78,26 @@ export default async function PostPage({
         <p className="mt-6 text-lg leading-relaxed whitespace-pre-wrap">
           {post.content}
         </p>
+
+        <details className="mt-6 group">
+          <summary className="cursor-pointer list-none select-none inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wide text-ink-soft hover:text-ink">
+            <span className="inline-block leading-none transition-transform group-open:rotate-45">
+              +
+            </span>
+            {t(locale, "post.citeTitle")}
+          </summary>
+          <div className="mt-2 rounded-lg border border-line bg-surface px-4 py-3 text-sm text-ink-soft">
+            <p className="font-mono break-words">
+              {post.authorName} ({post.createdAt.getFullYear()}). « {post.title} ». Kangae.{" "}
+              {(process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000") + `/post/${post.id}`}
+            </p>
+            {post.license && (
+              <p className="mt-2">
+                {t(locale, "post.citeLicense")} : {translateLicense(locale, post.license)}
+              </p>
+            )}
+          </div>
+        </details>
 
         <div className="mt-8 flex items-center justify-between gap-4">
           {viewer ? (

@@ -48,7 +48,8 @@ const strings: Record<Locale, Record<string, string>> = {
     "nouveau.newCategoriesHint": "Pas dans la liste ? Tapez-en une nouvelle, elle sera créée.",
     "nouveau.namePlaceholder": "Comment on vous appelle",
     "nouveau.submit": "Publier",
-    "nouveau.addTags": "Ajouter nature / catégories",
+    "nouveau.addTags": "Ajouter nature / catégories / licence",
+    "nouveau.license": "Licence",
     "nouveau.mediaSoon": "Médias — bientôt disponible",
 
     "partage.title": "Idée partagée !",
@@ -60,6 +61,8 @@ const strings: Record<Locale, Record<string, string>> = {
     "post.upvoteLoginHint": "Se connecter pour upvoter",
     "post.delete": "Supprimer",
     "post.deleteConfirm": "Supprimer définitivement ce post ?",
+    "post.citeTitle": "Comment citer cette idée",
+    "post.citeLicense": "Licence",
     "post.verified": "✓ vérifié",
     "post.noAccount":
       "{name} n'a pas de compte vérifié — cette idée est publique et libre, n'importe qui peut s'en emparer.",
@@ -136,7 +139,8 @@ const strings: Record<Locale, Record<string, string>> = {
     "nouveau.newCategoriesHint": "Not in the list? Type a new one, it'll be created.",
     "nouveau.namePlaceholder": "What should we call you",
     "nouveau.submit": "Post",
-    "nouveau.addTags": "Add type / categories",
+    "nouveau.addTags": "Add type / categories / license",
+    "nouveau.license": "License",
     "nouveau.mediaSoon": "Media — coming soon",
 
     "partage.title": "Idea shared!",
@@ -148,6 +152,8 @@ const strings: Record<Locale, Record<string, string>> = {
     "post.upvoteLoginHint": "Sign in to upvote",
     "post.delete": "Delete",
     "post.deleteConfirm": "Permanently delete this post?",
+    "post.citeTitle": "How to cite this idea",
+    "post.citeLicense": "License",
     "post.verified": "✓ verified",
     "post.noAccount":
       "{name} doesn't have a verified account — this idea is public and free, anyone can pick it up.",
@@ -222,4 +228,17 @@ export function translateCategory(locale: Locale, slug: string, fallback: string
 
 export function translateNature(locale: Locale, slug: string, fallback: string): string {
   return NATURE_TRANSLATIONS[slug]?.[locale] ?? fallback;
+}
+
+export const LICENSE_OPTIONS = ["cc0", "cc-by", "mit", "tous-droits-reserves"] as const;
+
+const LICENSE_TRANSLATIONS: Record<string, Record<Locale, string>> = {
+  cc0: { fr: "CC0 (domaine public)", en: "CC0 (public domain)" },
+  "cc-by": { fr: "CC-BY (attribution)", en: "CC-BY (attribution)" },
+  mit: { fr: "MIT (code)", en: "MIT (code)" },
+  "tous-droits-reserves": { fr: "Tous droits réservés", en: "All rights reserved" },
+};
+
+export function translateLicense(locale: Locale, slug: string): string {
+  return LICENSE_TRANSLATIONS[slug]?.[locale] ?? slug;
 }
