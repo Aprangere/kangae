@@ -10,7 +10,6 @@ const strings: Record<Locale, Record<string, string>> = {
     "header.logout": "Déconnexion",
     "header.login": "Se connecter",
 
-    "home.eyebrow": "Recherche · Startup · Politique publique",
     "home.title": "Relier ceux qui pensent à ceux qui font.",
     "home.subtitle":
       "Ce qui peut changer des vies tient parfois en quatre phrases — trouvez l'idée qui vous manquait, ou partagez la vôtre.",
@@ -32,8 +31,8 @@ const strings: Record<Locale, Record<string, string>> = {
     "sidebar.categories": "Catégories",
 
     "postcard.pts": "pts",
-    "postcard.interestedSuffix_one": "{count} intéressé",
-    "postcard.interestedSuffix_other": "{count} intéressés",
+    "postcard.interestedSuffix_one": "{count} vote",
+    "postcard.interestedSuffix_other": "{count} votes",
 
     "nouveau.title": "Publier",
     "nouveau.connected":
@@ -43,22 +42,23 @@ const strings: Record<Locale, Record<string, string>> = {
     "nouveau.connectLink": "Connectez-vous",
     "nouveau.connectSuffix": "pour être joignable.",
     "nouveau.nature": "Nature du post",
-    "nouveau.multi": "Plusieurs choix possibles",
-    "nouveau.titleLabel": "Titre",
     "nouveau.titlePlaceholder": "En une phrase, de quoi s'agit-il ?",
-    "nouveau.content": "Contenu — le besoin, le contexte, ce qui manque",
     "nouveau.contentPlaceholder": "Quatre phrases suffisent.",
     "nouveau.categories": "Catégories",
     "nouveau.newCategoriesPlaceholder": "Ajouter d'autres catégories (séparées par des virgules)",
     "nouveau.newCategoriesHint": "Pas dans la liste ? Tapez-en une nouvelle, elle sera créée.",
-    "nouveau.name": "Votre nom",
     "nouveau.namePlaceholder": "Comment on vous appelle",
     "nouveau.submit": "Publier",
+    "nouveau.addTags": "Ajouter nature / catégories",
+    "nouveau.mediaSoon": "Médias — bientôt disponible",
 
-    "post.notManifested": "Personne ne s'est encore manifesté.",
-    "post.interestedCount_one": "{count} personne intéressée.",
-    "post.interestedCount_other": "{count} personnes intéressées.",
-    "post.interestedButton": "Je suis intéressé",
+    "partage.title": "Idée partagée !",
+    "partage.subtitle": "« {title} » est maintenant visible par tout le monde.",
+    "partage.viewCta": "Voir mon idée",
+    "partage.anotherCta": "Partager une autre idée",
+
+    "post.upvoteLabel": "Upvoter cette idée",
+    "post.upvoteLoginHint": "Se connecter pour upvoter",
     "post.verified": "✓ vérifié",
     "post.noAccount":
       "{name} n'a pas de compte vérifié — cette idée est publique et libre, n'importe qui peut s'en emparer.",
@@ -89,7 +89,6 @@ const strings: Record<Locale, Record<string, string>> = {
     "header.logout": "Log out",
     "header.login": "Log in",
 
-    "home.eyebrow": "Research · Startup · Public policy",
     "home.title": "Connecting those who think to those who do.",
     "home.subtitle":
       "What can change lives sometimes fits in four sentences — find the idea you were missing, or share yours.",
@@ -111,8 +110,8 @@ const strings: Record<Locale, Record<string, string>> = {
     "sidebar.categories": "Categories",
 
     "postcard.pts": "pts",
-    "postcard.interestedSuffix_one": "{count} interested",
-    "postcard.interestedSuffix_other": "{count} interested",
+    "postcard.interestedSuffix_one": "{count} vote",
+    "postcard.interestedSuffix_other": "{count} votes",
 
     "nouveau.title": "Post",
     "nouveau.connected":
@@ -122,22 +121,23 @@ const strings: Record<Locale, Record<string, string>> = {
     "nouveau.connectLink": "Sign in",
     "nouveau.connectSuffix": "to be reachable.",
     "nouveau.nature": "Post type",
-    "nouveau.multi": "Multiple choices allowed",
-    "nouveau.titleLabel": "Title",
     "nouveau.titlePlaceholder": "In one sentence, what is it about?",
-    "nouveau.content": "Content — the need, the context, what's missing",
     "nouveau.contentPlaceholder": "Four sentences are enough.",
     "nouveau.categories": "Categories",
     "nouveau.newCategoriesPlaceholder": "Add other categories (comma-separated)",
     "nouveau.newCategoriesHint": "Not in the list? Type a new one, it'll be created.",
-    "nouveau.name": "Your name",
     "nouveau.namePlaceholder": "What should we call you",
     "nouveau.submit": "Post",
+    "nouveau.addTags": "Add type / categories",
+    "nouveau.mediaSoon": "Media — coming soon",
 
-    "post.notManifested": "No one has shown interest yet.",
-    "post.interestedCount_one": "{count} person interested.",
-    "post.interestedCount_other": "{count} people interested.",
-    "post.interestedButton": "I'm interested",
+    "partage.title": "Idea shared!",
+    "partage.subtitle": "\"{title}\" is now visible to everyone.",
+    "partage.viewCta": "View my idea",
+    "partage.anotherCta": "Share another idea",
+
+    "post.upvoteLabel": "Upvote this idea",
+    "post.upvoteLoginHint": "Sign in to upvote",
     "post.verified": "✓ verified",
     "post.noAccount":
       "{name} doesn't have a verified account — this idea is public and free, anyone can pick it up.",

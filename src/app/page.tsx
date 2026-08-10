@@ -22,9 +22,6 @@ export default async function Home() {
       <Header />
 
       <section className="flex-1 flex flex-col items-center justify-center text-center px-6 py-20 md:min-h-[70vh]">
-        <p className="font-mono text-xs uppercase tracking-wide text-ink-soft mb-4">
-          {t(locale, "home.eyebrow")}
-        </p>
         <h1 className="font-display text-4xl sm:text-6xl font-semibold tracking-tight max-w-3xl">
           {t(locale, "home.title")}
         </h1>

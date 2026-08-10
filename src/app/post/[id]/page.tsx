@@ -8,7 +8,7 @@ import { getPostAuthorPoints } from "@/lib/points";
 import { getCurrentUser } from "@/lib/auth";
 import { getLocale } from "@/lib/locale";
 import { getVoterKey } from "@/lib/interest";
-import { t, plural, translateCategory, translateNature } from "@/lib/i18n";
+import { t, translateCategory, translateNature } from "@/lib/i18n";
 
 export default async function PostPage({
   params,
@@ -65,25 +65,38 @@ export default async function PostPage({
           {post.content}
         </p>
 
-        <div className="mt-10 rounded-lg border border-line bg-surface px-5 py-4 flex items-center justify-between gap-4">
-          <p className="text-sm">
-            {post.interestedCount === 0
-              ? t(locale, "post.notManifested")
-              : plural(locale, "post.interestedCount", post.interestedCount)}
-          </p>
-          <form action={markInterested.bind(null, post.id)}>
-            <button
-              type="submit"
-              className={`font-mono text-xs uppercase tracking-wide rounded-full border border-orange px-4 py-2 transition-colors whitespace-nowrap ${
-                hasVoted
-                  ? "bg-orange text-white"
-                  : "text-orange hover:bg-orange hover:text-white"
-              }`}
+        <div className="mt-8">
+          {viewer ? (
+            <form action={markInterested.bind(null, post.id)}>
+              <button
+                type="submit"
+                aria-pressed={hasVoted}
+                aria-label={t(locale, "post.upvoteLabel")}
+                className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-1.5 font-mono text-xs transition-colors ${
+                  hasVoted
+                    ? "border-orange bg-orange text-white"
+                    : "border-line text-ink-soft hover:border-orange hover:text-orange"
+                }`}
+              >
+                <svg viewBox="0 0 20 20" fill="currentColor" className="h-3 w-3">
+                  <path d="M10 4l6.5 7.5h-4.2V16h-4.6v-4.5H3.5L10 4z" />
+                </svg>
+                {post.interestedCount}
+              </button>
+            </form>
+          ) : (
+            <Link
+              href="/connexion"
+              aria-label={t(locale, "post.upvoteLoginHint")}
+              title={t(locale, "post.upvoteLoginHint")}
+              className="inline-flex items-center gap-1.5 rounded-full border border-line px-4 py-1.5 font-mono text-xs text-ink-soft hover:border-orange hover:text-orange transition-colors"
             >
-              {hasVoted ? "✓ " : ""}
-              {t(locale, "post.interestedButton")}
-            </button>
-          </form>
+              <svg viewBox="0 0 20 20" fill="currentColor" className="h-3 w-3">
+                <path d="M10 4l6.5 7.5h-4.2V16h-4.6v-4.5H3.5L10 4z" />
+              </svg>
+              {post.interestedCount}
+            </Link>
+          )}
         </div>
 
         <div className="mt-3 rounded-lg border border-line px-5 py-4">

@@ -10,7 +10,7 @@ import { sendMagicLink } from "@/lib/mail";
 import { EMAIL_PATTERN } from "@/lib/posts";
 import { LOCALE_COOKIE } from "@/lib/i18n";
 import { slugify } from "@/lib/slug";
-import { getOrCreateVoterKey } from "@/lib/interest";
+import { getVoterKey } from "@/lib/interest";
 
 export async function setLocale(locale: string) {
   const cookieStore = await cookies();
@@ -24,7 +24,7 @@ export async function createPost(formData: FormData) {
   const currentUser = await getCurrentUser();
   const title = formData.get("title");
   const content = formData.get("content");
-  const authorName = formData.get("authorName");
+  const authorNameRaw = formData.get("authorName");
   const categorySlugs = formData.getAll("categories").map(String);
   const natureSlugs = formData.getAll("natures").map(String);
   const newCategoriesRaw = formData.get("newCategories");
@@ -35,7 +35,11 @@ export async function createPost(formData: FormData) {
   if (typeof content !== "string" || content.trim().length === 0) {
     throw new Error("Le contenu est requis.");
   }
-  if (typeof authorName !== "string" || authorName.trim().length === 0) {
+  const authorName =
+    typeof authorNameRaw === "string" && authorNameRaw.trim().length > 0
+      ? authorNameRaw.trim()
+      : currentUser?.name ?? currentUser?.email;
+  if (!authorName) {
     throw new Error("Le nom est requis.");
   }
 
@@ -51,7 +55,7 @@ export async function createPost(formData: FormData) {
     data: {
       title: title.trim(),
       content: content.trim(),
-      authorName: authorName.trim(),
+      authorName,
       authorId: currentUser?.id,
       categories: {
         connect: categorySlugs.map((slug) => ({ slug })),
@@ -65,11 +69,12 @@ export async function createPost(formData: FormData) {
   });
 
   revalidatePath("/");
-  redirect(`/post/${post.id}`);
+  redirect(`/nouveau/publie?id=${post.id}`);
 }
 
 export async function markInterested(postId: string) {
-  const voterKey = await getOrCreateVoterKey();
+  const voterKey = await getVoterKey();
+  if (!voterKey) redirect("/connexion");
 
   const existing = await prisma.interest.findUnique({
     where: { postId_voterKey: { postId, voterKey } },
