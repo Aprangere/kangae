@@ -72,6 +72,27 @@ export async function createPost(formData: FormData) {
   redirect(`/nouveau/publie?id=${post.id}`);
 }
 
+export async function deletePost(postId: string) {
+  const currentUser = await getCurrentUser();
+  const post = await prisma.post.findUnique({ where: { id: postId } });
+  if (!post) redirect("/");
+
+  const canDelete = currentUser?.isAdmin || currentUser?.id === post.authorId;
+  if (!canDelete) {
+    throw new Error("Vous n'avez pas le droit de supprimer ce post.");
+  }
+
+  await prisma.$transaction([
+    prisma.interest.deleteMany({ where: { postId } }),
+    prisma.message.deleteMany({ where: { postId } }),
+    prisma.post.delete({ where: { id: postId } }),
+  ]);
+
+  revalidatePath("/");
+  revalidatePath("/explorer");
+  redirect("/");
+}
+
 export async function markInterested(postId: string) {
   const voterKey = await getVoterKey();
   if (!voterKey) redirect("/connexion");

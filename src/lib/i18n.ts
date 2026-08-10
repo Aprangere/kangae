@@ -43,7 +43,6 @@ const strings: Record<Locale, Record<string, string>> = {
     "nouveau.connectSuffix": "pour être joignable.",
     "nouveau.nature": "Nature du post",
     "nouveau.titlePlaceholder": "En une phrase, de quoi s'agit-il ?",
-    "nouveau.contentPlaceholder": "Quatre phrases suffisent.",
     "nouveau.categories": "Catégories",
     "nouveau.newCategoriesPlaceholder": "Ajouter d'autres catégories (séparées par des virgules)",
     "nouveau.newCategoriesHint": "Pas dans la liste ? Tapez-en une nouvelle, elle sera créée.",
@@ -59,6 +58,8 @@ const strings: Record<Locale, Record<string, string>> = {
 
     "post.upvoteLabel": "Upvoter cette idée",
     "post.upvoteLoginHint": "Se connecter pour upvoter",
+    "post.delete": "Supprimer",
+    "post.deleteConfirm": "Supprimer définitivement ce post ?",
     "post.verified": "✓ vérifié",
     "post.noAccount":
       "{name} n'a pas de compte vérifié — cette idée est publique et libre, n'importe qui peut s'en emparer.",
@@ -122,7 +123,6 @@ const strings: Record<Locale, Record<string, string>> = {
     "nouveau.connectSuffix": "to be reachable.",
     "nouveau.nature": "Post type",
     "nouveau.titlePlaceholder": "In one sentence, what is it about?",
-    "nouveau.contentPlaceholder": "Four sentences are enough.",
     "nouveau.categories": "Categories",
     "nouveau.newCategoriesPlaceholder": "Add other categories (comma-separated)",
     "nouveau.newCategoriesHint": "Not in the list? Type a new one, it'll be created.",
@@ -138,6 +138,8 @@ const strings: Record<Locale, Record<string, string>> = {
 
     "post.upvoteLabel": "Upvote this idea",
     "post.upvoteLoginHint": "Sign in to upvote",
+    "post.delete": "Delete",
+    "post.deleteConfirm": "Permanently delete this post?",
     "post.verified": "✓ verified",
     "post.noAccount":
       "{name} doesn't have a verified account — this idea is public and free, anyone can pick it up.",

@@ -52,7 +52,6 @@ export default async function NewPostPage() {
             required
             rows={4}
             maxLength={600}
-            placeholder={t(locale, "nouveau.contentPlaceholder")}
             className="w-full bg-transparent mt-2 resize-none leading-relaxed placeholder:text-ink-soft focus:outline-none"
           />
 

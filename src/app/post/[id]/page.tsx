@@ -2,13 +2,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { prisma } from "@/lib/prisma";
-import { markInterested, sendMessage } from "@/app/actions";
+import { deletePost, markInterested, sendMessage } from "@/app/actions";
 import { timeAgo } from "@/lib/posts";
 import { getPostAuthorPoints } from "@/lib/points";
 import { getCurrentUser } from "@/lib/auth";
 import { getLocale } from "@/lib/locale";
 import { getVoterKey } from "@/lib/interest";
 import { t, translateCategory, translateNature } from "@/lib/i18n";
+import { DeleteButton } from "@/components/DeleteButton";
 
 export default async function PostPage({
   params,
@@ -30,6 +31,7 @@ export default async function PostPage({
 
   const points = await getPostAuthorPoints(post);
   const isOwnPost = viewer?.id === post.authorId;
+  const canDelete = isOwnPost || Boolean(viewer?.isAdmin);
   const hasVoted = voterKey
     ? Boolean(
         await prisma.interest.findUnique({
@@ -65,7 +67,7 @@ export default async function PostPage({
           {post.content}
         </p>
 
-        <div className="mt-8">
+        <div className="mt-8 flex items-center justify-between gap-4">
           {viewer ? (
             <form action={markInterested.bind(null, post.id)}>
               <button
@@ -96,6 +98,15 @@ export default async function PostPage({
               </svg>
               {post.interestedCount}
             </Link>
+          )}
+
+          {canDelete && (
+            <form action={deletePost.bind(null, post.id)}>
+              <DeleteButton
+                label={t(locale, "post.delete")}
+                confirmText={t(locale, "post.deleteConfirm")}
+              />
+            </form>
           )}
         </div>
 
